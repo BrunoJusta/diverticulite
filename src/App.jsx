@@ -45,32 +45,35 @@ const MEALS = [
   { key: "jn", label: "Jantar", icon: "🌙" },
 ];
 
-const SUGGESTIONS = {
-  0: {
-    pa: "Chá de camomila + gelatina",
-    al: "Caldo de legumes coado",
-    ln: "Água de arroz ou sumo de maçã s/ polpa",
-    jn: "Sopa passada e coada (batata + cenoura)",
-  },
-  1: {
-    pa: "Torrada branca + iogurte natural",
-    al: "Arroz branco + pescada cozida + puré de cenoura",
-    ln: "Banana madura ou maçã assada s/ casca",
-    jn: "Sopa passada + frango grelhado + batata cozida",
-  },
-  2: {
-    pa: "Papas de aveia suaves + banana",
-    al: "Massa branca + peixe + feijão verde cozido",
-    ln: "Pêra crua s/ casca + queijo fresco",
-    jn: "Sopa c/ pedaços moles + peru + brócolos cozidos",
-  },
-  3: {
-    pa: "Pão de mistura + ovo + fruta",
-    al: "Arroz + frango + legumes variados cozidos",
-    ln: "Iogurte + aveia + fruta crua",
-    jn: "Sopa normal + peixe + salada cozida/mista leve",
-  },
+/* Menus únicos por dia — 21 dias × 4 refeições, cada dia dentro das regras da sua fase */
+const DAY_MENUS = {
+  // ——— Fase 1 · Repouso (líquidos) ———
+  1:  { pa: "Chá de camomila + gelatina", al: "Caldo de legumes coado", ln: "Água de arroz", jn: "Sopa passada e coada (batata + cenoura)" },
+  2:  { pa: "Chá de cidreira + gelatina", al: "Sopa passada e coada de abóbora", ln: "Sumo de maçã sem polpa", jn: "Caldo de galinha coado, sem gordura" },
+  // ——— Fase 2 · Suave (baixo resíduo) ———
+  3:  { pa: "Torrada branca + iogurte natural", al: "Arroz branco + pescada cozida + puré de cenoura", ln: "Banana madura", jn: "Sopa passada + frango grelhado + batata cozida" },
+  4:  { pa: "Pão branco + ovo cozido", al: "Massa branca + peru grelhado + abóbora cozida", ln: "Maçã assada sem casca", jn: "Sopa passada + pescada cozida + arroz branco" },
+  5:  { pa: "Torrada + iogurte natural + banana", al: "Arroz branco + frango desfiado + cenoura cozida", ln: "Gelatina + bolacha Maria", jn: "Sopa passada + ovos mexidos + torrada branca" },
+  6:  { pa: "Papas de farinha de arroz", al: "Batata cozida + dourada grelhada + courgette sem casca", ln: "Pêra cozida", jn: "Sopa passada + peru + massa branca" },
+  7:  { pa: "Iogurte natural + bolacha Maria", al: "Massa branca + pescada + puré de abóbora", ln: "Maçã cozida c/ canela", jn: "Canja de galinha (arroz, sem pele)" },
+  // ——— Fase 3 · Transição (reintrodução gradual) ———
+  8:  { pa: "Papas de aveia suaves + banana", al: "Arroz + frango + feijão verde cozido", ln: "Pêra crua sem casca", jn: "Sopa c/ pedaços moles + pescada + batata" },
+  9:  { pa: "Torrada + queijo fresco", al: "Massa + peru + brócolos cozidos", ln: "Iogurte natural + aveia", jn: "Sopa juliana suave + omelete + arroz" },
+  10: { pa: "Aveia c/ maçã ralada sem casca", al: "Batata cozida + salmão grelhado + cenoura", ln: "Banana + bolacha Maria", jn: "Sopa + frango assado sem pele + courgette" },
+  11: { pa: "Pão de mistura (testar) + ovo mexido", al: "Arroz de peixe malandrinho suave", ln: "Maçã crua sem casca", jn: "Sopa + peru + puré de courgette" },
+  12: { pa: "Iogurte + aveia + pêra sem casca", al: "Massa c/ atum ao natural + abóbora", ln: "Queijo fresco + bolacha Maria", jn: "Sopa + pescada no forno + batata" },
+  13: { pa: "Panquecas simples de aveia + banana", al: "Frango + arroz + brócolos cozidos", ln: "Gelatina + fruta cozida", jn: "Sopa + ovos escalfados + torrada de mistura" },
+  14: { pa: "Pão de mistura + queijo fresco", al: "Dourada grelhada + batata + feijão verde", ln: "Iogurte natural + banana", jn: "Canja + torrada de mistura" },
+  // ——— Fase 4 · Equilíbrio (rumo ao normal) ———
+  15: { pa: "Aveia + fruta fresca", al: "Arroz + frango + salada leve (alface, cenoura)", ln: "Pêra ou maçã c/ casca fina", jn: "Sopa normal + pescada + legumes variados" },
+  16: { pa: "Pão de mistura + ovo + sumo natural", al: "Massa + peru + legumes cozidos", ln: "Iogurte + aveia + mel", jn: "Creme de legumes + salmão + batata-doce cozida" },
+  17: { pa: "Iogurte + aveia + banana", al: "Bife de frango + arroz + salada leve", ln: "Fruta da época", jn: "Puré de grão suave (testar) + legumes cozidos + ovo" },
+  18: { pa: "Torrada de mistura + queijo fresco + fruta", al: "Peixe no forno + batata + brócolos", ln: "Aveia + iogurte", jn: "Sopa + omelete de legumes + salada leve" },
+  19: { pa: "Papas de aveia + pêra", al: "Arroz de frango c/ legumes", ln: "Banana + frutos da época", jn: "Creme de lentilhas suave (testar) + torrada" },
+  20: { pa: "Pão de mistura + ovo mexido", al: "Massa + atum + salada mista leve", ln: "Iogurte + fruta", jn: "Sopa + peru grelhado + legumes salteados leves" },
+  21: { pa: "Aveia + fruta + iogurte 🎉", al: "Peixe + arroz + legumes + salada", ln: "Fruta + frutos secos (testar, poucos)", jn: "Sopa + prato leve à tua escolha" },
 };
+export { DAY_MENUS };
 
 const GUIDE = {
   0: {
@@ -393,7 +396,7 @@ export default function App() {
                   {m.label}
                 </div>
                 <div style={{ fontFamily: "'Caveat', cursive", fontSize: 16, color: "#6d675d", lineHeight: 1.2, marginTop: 2 }}>
-                  {SUGGESTIONS[phase.id][m.key]}
+                  {(DAY_MENUS[activeDay] || {})[m.key] || "—"}
                 </div>
               </div>
               <div style={{
